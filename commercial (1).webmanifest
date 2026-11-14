@@ -1,0 +1,16 @@
+{
+  "id": "/commercial.html",
+  "name": "VenteFlow Commercial",
+  "short_name": "VF Commercial",
+  "description": "Prospects, démonstrations et inscriptions des boutiques VenteFlow",
+  "start_url": "/commercial.html",
+  "scope": "/commercial",
+  "display": "standalone",
+  "background_color": "#14173B",
+  "theme_color": "#14173B",
+  "lang": "fr",
+  "icons": [
+    { "src": "/vf-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/vf-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

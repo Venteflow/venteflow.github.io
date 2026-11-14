@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VenteFlow Commercial</title>
+<meta name="description" content="L'application des commerciaux VenteFlow : prospects, présentation, inscriptions et commissions.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#14173B">
+<link rel="icon" href="/vf-icon-192.png">
+<link rel="manifest" href="/commercial.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--night:#14173B;--night2:#1E2250;--a:#4F46E5;--a-ink:#3730A3;--mist:#EEF0FF;--amber:#F59E0B;--amber-soft:#FDE68A;--page:#F6F7FB;--paper:#fff;--ink:#171A33;--muted:#5A607E;--line:#E2E5F1;--ok:#0B7A43;--okbg:#E3F5EA;--warn:#9A5B00;--warnbg:#FFF4D6;--bad:#B42318;--badbg:#FDECEA;--wa:#128C4A;
+--display:'Bricolage Grotesque',system-ui,sans-serif;--body:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--amber);outline-offset:2px;border-radius:8px}
+h1,h2,h3{font-family:var(--display);letter-spacing:-.02em;margin:0;line-height:1.1}
+[hidden]{display:none!important}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 16px;border-radius:12px;border:0;font-weight:800;font-size:15px;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn-a{background:var(--a);color:#fff}.btn-wa{background:var(--wa);color:#fff}.btn-am{background:var(--amber);color:#1A1205}
+.btn-line{background:#fff;border:1.5px solid var(--line);color:var(--ink)}
+.btn-sm{min-height:38px;padding:0 12px;font-size:14px;border-radius:10px}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+.w100{width:100%}
+.in{width:100%;min-height:48px;border-radius:12px;border:1.5px solid var(--line);padding:10px 12px;font-weight:600;font-size:16px;background:#fff}
+.in:focus{border-color:var(--a);outline:none}
+textarea.in{min-height:80px;resize:vertical}
+.lbl{display:block;font-weight:700;font-size:14px;margin:12px 0 6px}
+.hint{font-size:13px;color:var(--muted)}
+.err{color:var(--bad);font-weight:700;font-size:14px;min-height:20px;margin:10px 0 0}
+
+/* connexion */
+#login{min-height:100%;display:grid;place-items:center;padding:24px 16px;background:var(--night);background-image:radial-gradient(rgba(165,180,252,.12) 1px,transparent 1px);background-size:24px 24px}
+.lcard{width:min(400px,100%);background:#fff;border-radius:22px;padding:26px 22px;box-shadow:0 30px 70px rgba(0,0,0,.4)}
+.lcard .logo{width:56px;height:56px;margin:0 auto 10px;display:block}
+.lcard h1{text-align:center;font-size:26px}
+.lcard .sub{text-align:center;color:var(--muted);margin:6px 0 14px}
+
+/* app */
+#app{min-height:100%;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+.top{position:sticky;top:0;z-index:20;background:var(--night);color:#fff;padding:12px 16px calc(12px);display:flex;align-items:center;gap:12px}
+.top img{width:34px;height:34px}
+.top .t{flex:1;min-width:0}
+.top .t b{display:block;font-family:var(--display);font-size:18px;line-height:1.1}
+.top .t span{font-size:12.5px;color:#C9CDF5}
+.top button{background:rgba(255,255,255,.1);border:0;color:#fff;border-radius:10px;min-height:38px;padding:0 12px;font-weight:700;cursor:pointer}
+.wrap{width:min(720px,100%);margin:0 auto;padding:16px}
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom)}
+.nav button{background:none;border:0;padding:8px 2px 9px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11.5px;font-weight:700;color:var(--muted);cursor:pointer;position:relative}
+.nav button .i{font-size:21px;line-height:1}
+.nav button.on{color:var(--a)}
+.nav button.on::before{content:"";position:absolute;top:0;left:22%;right:22%;height:3px;border-radius:0 0 3px 3px;background:var(--a)}
+.nav .bd{position:absolute;top:4px;left:56%;background:var(--bad);color:#fff;font-size:10.5px;min-width:17px;height:17px;border-radius:9px;display:grid;place-items:center;padding:0 4px}
+.sec{margin:0 0 18px}
+.sec>h2{font-size:20px;margin:0 0 10px}
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 14px}
+.kpi b{display:block;font-family:var(--display);font-size:26px;line-height:1.1;margin-top:2px}
+.kpi span{font-size:12.5px;color:var(--muted);font-weight:700}
+.kpi.big{grid-column:1/-1;background:var(--night);color:#fff;border:0}
+.kpi.big span{color:#C9CDF5}.kpi.big b{font-size:30px;color:var(--amber-soft)}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px}
+.row{display:flex;align-items:center;gap:10px}
+.grow{flex:1;min-width:0}
+.ell{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:800;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.p-nouveau{background:#EEF0FF;color:#3730A3}.p-rdv{background:#E0F2FE;color:#075985}.p-demo{background:#F3E8FF;color:#6B21A8}.p-essai{background:var(--warnbg);color:var(--warn)}.p-abonne{background:var(--okbg);color:var(--ok)}.p-perdu{background:#F1F2F6;color:#6B7090}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;padding:8px 13px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-weight:700;font-size:13.5px;cursor:pointer;white-space:nowrap}
+.chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.empty{text-align:center;color:var(--muted);padding:26px 10px;font-weight:600}
+.fab{position:fixed;right:16px;bottom:calc(88px + env(safe-area-inset-bottom));z-index:19;width:58px;height:58px;border-radius:50%;border:0;background:var(--amber);color:#1A1205;font-size:30px;font-weight:800;box-shadow:0 12px 28px rgba(20,23,59,.3);cursor:pointer}
+.alert{border-radius:12px;padding:10px 12px;font-size:14px;font-weight:600;margin-bottom:10px}
+.a-warn{background:var(--warnbg);color:var(--warn)}.a-bad{background:var(--badbg);color:var(--bad)}.a-ok{background:var(--okbg);color:var(--ok)}
+
+/* fenêtre */
+.sheet{position:fixed;inset:0;z-index:40;background:rgba(20,23,59,.55);display:flex;align-items:flex-end;justify-content:center}
+.sh{background:#fff;width:min(560px,100%);max-height:94vh;overflow:auto;border-radius:20px 20px 0 0;padding:18px 18px calc(20px + env(safe-area-inset-bottom))}
+@media(min-width:700px){.sheet{align-items:center}.sh{border-radius:20px}}
+.sh-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px}
+.sh-top h2{font-size:21px}
+.x{width:40px;height:40px;border-radius:50%;border:0;background:#F0F1F7;font-size:20px;cursor:pointer;flex:none}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sts{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.sts button{border:1.5px solid var(--line);background:#fff;border-radius:10px;min-height:40px;font-weight:700;font-size:13px;cursor:pointer}
+.sts button.on{border-color:var(--a);box-shadow:inset 0 0 0 1.5px var(--a);color:var(--a-ink)}
+.cred{background:var(--mist);border-radius:12px;padding:12px;font-size:14.5px;line-height:1.7;word-break:break-word}
+
+/* présentation */
+.pres{position:fixed;inset:0;z-index:50;background:var(--night);color:#fff;display:flex;flex-direction:column}
+.pres-top{display:flex;align-items:center;gap:10px;padding:12px 16px;padding-top:calc(12px + env(safe-area-inset-top))}
+.pres-top .dots{flex:1;display:flex;gap:4px}
+.pres-top .dots i{flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,.2)}
+.pres-top .dots i.on{background:var(--amber)}
+.pres-top button{background:rgba(255,255,255,.12);border:0;color:#fff;width:40px;height:40px;border-radius:50%;font-size:18px;cursor:pointer}
+.slide{flex:1;overflow:auto;padding:10px 22px 20px;display:flex;flex-direction:column;justify-content:center;max-width:720px;margin:0 auto;width:100%}
+.slide .ico{font-size:52px;line-height:1;margin-bottom:12px}
+.slide h2{font-size:clamp(28px,7vw,44px);font-weight:800;margin-bottom:12px}
+.slide p.lead{color:#C9CDF5;font-size:18px;margin:0 0 16px}
+.slide ul{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.slide li{background:rgba(255,255,255,.07);border:1px solid rgba(165,180,252,.2);border-radius:14px;padding:12px 14px;font-size:16px}
+.slide li b{display:block;color:var(--amber-soft);font-size:16.5px;margin-bottom:2px}
+.price{display:grid;gap:10px}
+.price div{background:#fff;color:var(--ink);border-radius:14px;padding:14px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.price div b{font-family:var(--display);font-size:24px}
+.price div.best{outline:3px solid var(--amber)}
+.pres-bot{display:flex;gap:10px;padding:12px 16px calc(14px + env(safe-area-inset-bottom))}
+.pres-bot .btn{flex:1;min-height:52px}
+.pres-bot .prev{background:rgba(255,255,255,.12);color:#fff}
+details.obj{background:#fff;border:1px solid var(--line);border-radius:14px;padding:0 14px;margin-bottom:8px}
+details.obj summary{cursor:pointer;list-style:none;padding:13px 0;font-weight:800;display:flex;justify-content:space-between;gap:10px}
+details.obj summary::-webkit-details-marker{display:none}
+details.obj summary::after{content:"+";color:var(--a);font-size:22px;line-height:1}
+details.obj[open] summary::after{content:"−"}
+details.obj p{margin:0 0 14px;color:var(--muted)}
+.mets{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.mets button{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:12px 6px;font-weight:700;font-size:13px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px}
+.mets button span{font-size:26px}
+.toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:60;background:var(--ink);color:#fff;padding:12px 16px;border-radius:12px;font-weight:700;font-size:14.5px;max-width:calc(100% - 32px);box-shadow:0 12px 30px rgba(0,0,0,.3)}
+table.tb{width:100%;border-collapse:collapse;font-size:14px}
+table.tb td,table.tb th{padding:8px 4px;border-bottom:1px solid var(--line);text-align:left}
+table.tb th{font-size:12px;color:var(--muted)}
+table.tb td.n,table.tb th.n{text-align:right;white-space:nowrap}
+@media(min-width:560px){.kpis{grid-template-columns:repeat(4,1fr)}.kpi.big{grid-column:span 2}}
+</style>
+</head>
+<body>
+
+<section id="login" hidden>
+  <div class="lcard">
+    <img class="logo" src="/vf-icon-192.png" alt="">
+    <h1>VenteFlow Commercial</h1>
+    <p class="sub">Espace réservé aux commerciaux VenteFlow</p>
+    <label class="lbl" for="l-email">Email</label>
+    <input class="in" id="l-email" type="email" autocomplete="username" inputmode="email">
+    <label class="lbl" for="l-pass">Mot de passe</label>
+    <input class="in" id="l-pass" type="password" autocomplete="current-password">
+    <div class="err" id="l-err" role="alert"></div>
+    <button class="btn btn-a w100" id="l-go" type="button" style="margin-top:10px;min-height:52px">Se connecter</button>
+    <p class="hint" style="text-align:center;margin:14px 0 0">Mot de passe oublié ? Demandez-en un nouveau à VenteFlow.</p>
+  </div>
+</section>
+
+<section id="app" hidden>
+  <header class="top"><img src="/vf-icon-192.png" alt=""><div class="t"><b id="me-nom">VenteFlow</b><span id="me-sub">Commercial</span></div><button type="button" id="b-out">Quitter</button></header>
+  <main class="wrap" id="view"></main>
+  <button class="fab" id="fab" type="button" aria-label="Nouveau prospect" hidden>+</button>
+  <nav class="nav" aria-label="Menu">
+    <button type="button" data-v="accueil" class="on"><span class="i">🏠</span>Accueil</button>
+    <button type="button" data-v="prospects"><span class="i">👥</span>Prospects<span class="bd" id="bd-rel" hidden></span></button>
+    <button type="button" data-v="presenter"><span class="i">🎯</span>Présenter</button>
+    <button type="button" data-v="boutiques"><span class="i">🏪</span>Boutiques</button>
+    <button type="button" data-v="gains"><span class="i">💰</span>Gains</button>
+  </nav>
+</section>
+
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true"><div class="sh" id="sh"></div></div>
+<div class="pres" id="pres" hidden role="dialog" aria-modal="true" aria-label="Présentation de VenteFlow"></div>
+<div class="toast" id="toast" hidden role="status"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+"use strict";
+var SB_URL="https://tjjjwtquuuregdkdhksb.supabase.co",SB_KEY="sb_publishable_XHoR7BLuUVOj3ky9F3aENw_BuO_vWHG";
+var APP_URL="https://venteflow.github.io/",SITE="https://venteflow.vercel.app",SUPPORT="221766956193";
+var sb=null,ME=null,P=[],R=[],V=[],TARIFS={Starter:5000,Business:10000,Enterprise:20000},view="accueil",filt="actifs",q="";
+
+/* ── Métiers : ce que VenteFlow fait pour chacun ── */
+var MET={
+ general:{l:"Commerce général",i:"🏪",f:[["Caisse rapide","Touchez un produit, encaissez : la monnaie est calculée."],["Stock toujours juste","Alerte avant la rupture, doublons signalés."],["Vente à crédit","Acompte, date limite, relance WhatsApp en un clic."],["Chiffres du soir","Chiffre d'affaires, bénéfice et meilleurs produits."]]},
+ mercerie:{l:"Mercerie & tissus",i:"🧵",f:[["Au mètre, au yard, à la pièce","2,5 m de bazin ou 6 yards de wax : le stock suit à la virgule près."],["Prix de gros pour les tailleurs","Il s'applique tout seul pour une pièce complète."],["Catégories prêtes","Wax, bazin, fils, boutons, perles, dentelles dès le 1er jour."],["Crédit des tailleurs","Acompte, date limite et rappel WhatsApp."]]},
+ alimentation:{l:"Alimentation",i:"🛒",f:[["Au sac, au kilo, au litre","Un sac entier ou 2 kg de sucre : la caisse calcule."],["Prix de gros automatique","Les revendeurs paient le prix de gros au sac ou au carton."],["Alerte péremption","Les produits qui périment dans 30 jours sont signalés."],["Fini l'ardoise papier","Crédit du quartier avec acompte et rappel WhatsApp."]]},
+ superette:{l:"Supérette",i:"🏬",f:[["Codes-barres","La caméra du téléphone suffit, ou un lecteur USB."],["Péremption","Liste des produits à écouler en priorité."],["Rayons prêts","Épicerie, boissons, frais, hygiène, entretien, bébé."],["Plusieurs caisses","Plusieurs vendeurs, un seul stock synchronisé."]]},
+ quincaillerie:{l:"Quincaillerie",i:"🔧",f:[["Prix de gros automatique","Dès 10 sacs ou un carton. Impossible de vendre à perte."],["Devis et factures pro","Logo, NINEA, RC, montant en lettres, devis → facture."],["Kilo, mètre, pièce","Clous au kilo, câble au mètre, vis au paquet."],["Comptes des chantiers","Crédit aux entrepreneurs, acomptes suivis."]]},
+ fastfood:{l:"Fast-food",i:"🍔",f:[["Sur place, à emporter, livraison","Un toucher, imprimé sur le ticket."],["Ticket cuisine","Sans les prix, avec les notes : sans piment, bien cuit."],["Numéro de commande","Pour appeler le client quand c'est prêt."],["Clôture de caisse","Ventes par mode de paiement et écart d'espèces."]]},
+ restaurant:{l:"Restaurant",i:"🍽️",f:[["Tables","La commande reste ouverte jusqu'à l'addition."],["Envoyer en cuisine","Les ajouts n'impriment que les nouveaux plats."],["Notes pour la cuisine","Sans piment, sauce à part."],["Serveurs avec code","Chacun encaisse, seul le gérant supprime."]]},
+ telephonie:{l:"Téléphonie & électroménager",i:"📱",f:[["IMEI obligatoire","Impossible de vendre un téléphone sans son IMEI."],["Garantie sur la facture","Durée et date de fin imprimées."],["Recherche par IMEI","Vente, date, client et garantie en 2 secondes."],["Réparations","Vendues comme un service, sans stock."]]},
+ ecole:{l:"École",i:"🎓",f:[["Élèves et classes","Une fiche par élève avec son parent."],["Mois par mois","Un mois ne peut pas être payé deux fois."],["Tableau de suivi","Toutes les classes : payé, à crédit, en retard."],["Relance des parents","Le message WhatsApp est prêt en un toucher."]]},
+ gaz:{l:"Dépôt de gaz",i:"🔥",f:[["Pleines, vides, abîmées","Le stock de chaque format, et les bouteilles chez les clients."],["Échange, sans échange, consigne","Le bon prix en un toucher, la caution est notée."],["Consignes en retard","La liste des clients à relancer, rappel WhatsApp prêt."],["Recharges fournisseur","Vides qui partent, pleines qui arrivent, dettes suivies."]]}
+};
+var MET_PAGE={mercerie:1,alimentation:1,superette:1,quincaillerie:1,fastfood:1,restaurant:1,telephonie:1,ecole:1};
+var ST={nouveau:"Nouveau",rdv:"RDV",demo:"Démo faite",essai:"En essai",abonne:"Abonné",perdu:"Perdu"};
+var OBJ=[
+ ["« C'est trop cher. »","Comparez avec ce qu'il perd : un seul crédit oublié ou un carton volé coûte souvent plus qu'un mois de VenteFlow. Et il essaie 7 jours gratuitement, sans engagement : il juge sur pièce."],
+ ["« Je n'ai pas toujours internet. »","VenteFlow marche sans internet. Les ventes restent sur le téléphone et partent dans le cloud quand le réseau revient. Même pendant une coupure de courant, on continue à vendre."],
+ ["« Je ne sais pas utiliser ces choses. »","Montrez une vente en 3 touchers sur votre téléphone. Les catégories de son métier sont déjà prêtes. Vous faites l'installation avec lui et VenteFlow répond sur WhatsApp 7j/7."],
+ ["« J'ai mon cahier, ça marche. »","Le cahier ne dit pas ce qui manque en stock, ne calcule pas le bénéfice et ne relance pas les clients à crédit. Avec VenteFlow, il voit chaque soir combien il a gagné."],
+ ["« Mes vendeurs vont voler. »","Au contraire : chaque vendeur a son code, chaque vente est enregistrée avec l'heure et le vendeur, seul le gérant peut supprimer une vente, et la clôture de caisse montre l'écart d'espèces."],
+ ["« Et si mon téléphone se casse ? »","Tout est sauvegardé dans le cloud. Il se connecte sur un autre téléphone ou un PC et retrouve tout : produits, ventes, crédits."],
+ ["« Mes données vont être vues ? »","Connexion chiffrée, code personnel, et chaque boutique ne voit que ses propres données."],
+ ["« Il faut un ordinateur ? »","Non. Téléphone, tablette ou PC. L'application s'installe sur l'écran d'accueil comme une vraie application, sans passer par le Play Store."]
+];
+
+/* ── Outils ── */
+function $(id){return document.getElementById(id);}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function money(n){return new Intl.NumberFormat("fr-FR").format(Math.round(n||0)).replace(/ | /g," ")+" F";}
+function today(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function addDays(n){var d=new Date();d.setDate(d.getDate()+n);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function fdate(iso){if(!iso)return "—";var d=new Date(String(iso).length===10?iso+"T12:00:00":iso);return d.toLocaleDateString("fr-FR",{day:"numeric",month:"short"});}
+function monthKey(iso){return String(iso||"").slice(0,7);}
+function monthLabel(k){var d=new Date(k+"-15T12:00:00");var s=d.toLocaleDateString("fr-FR",{month:"long",year:"numeric"});return s.charAt(0).toUpperCase()+s.slice(1);}
+function ago(ts){if(!ts)return "jamais";var m=Math.round((Date.now()-new Date(ts).getTime())/60e3);if(m<3)return "à l'instant";if(m<60)return "il y a "+m+" min";var h=Math.round(m/60);if(h<24)return "il y a "+h+" h";var d=Math.round(h/24);return "il y a "+d+" j";}
+function waNum(n){n=String(n||"").replace(/\D/g,"");if(n.length===9)n="221"+n;return n;}
+function wa(n,t){return "https://wa.me/"+waNum(n)+(t?"?text="+encodeURIComponent(t):"");}
+function toast(t,ms){var e=$("toast");e.textContent=t;e.hidden=false;clearTimeout(e._t);e._t=setTimeout(function(){e.hidden=true;},ms||3000);}
+function genPwd(){var c="abcdefghjkmnpqrstuvwxyz23456789",s="",a=new Uint32Array(8);crypto.getRandomValues(a);for(var i=0;i<8;i++)s+=c[a[i]%c.length];return s.slice(0,4)+"-"+s.slice(4)+(10+a[0]%89);}
+function daysTo(iso){if(!iso)return null;return Math.round((new Date(iso+"T12:00:00")-new Date(today()+"T12:00:00"))/864e5);}
+function payReal(p){return p&&String(p.mode||"")!=="Offert"&&(+p.montant||0)>0;}
+
+/* ── Blocage après trop d'essais (5 erreurs → 2 min, à chaque fois) ── */
+var LK="vfc_lock",STEPS=[2];
+function lockGet(){try{return JSON.parse(localStorage.getItem(LK)||"{}")||{};}catch(e){return {};}}
+function lockLeft(){var l=(lockGet().until||0)-Date.now();return l>0?l:0;}
+function lockFmt(ms){var s=Math.ceil(ms/1000),m=Math.floor(s/60);s%=60;return m?m+" min"+(s?" "+(s<10?"0":"")+s+" s":""):s+" s";}
+function lockFail(){var o=lockGet(),now=Date.now();if(o.t&&now-o.t>864e5)o={};o.n=(o.n||0)+1;o.t=now;var r={left:5-o.n};
+  if(o.n>=5){var l=Math.min(o.lvl||0,STEPS.length-1);o.until=now+STEPS[l]*60e3;o.lvl=(o.lvl||0)+1;o.n=3;r={locked:STEPS[l]};}
+  try{localStorage.setItem(LK,JSON.stringify(o));}catch(e){}return r;}
+function lockTick(){var ms=lockLeft(),b=$("l-go");if(ms){b.disabled=true;b.textContent="🔒 Réessayez dans "+lockFmt(ms);setTimeout(lockTick,1000);}else if(b.disabled&&/Réessayez/.test(b.textContent)){b.disabled=false;b.textContent="Se connecter";$("l-err").textContent="";}}
+
+/* ── Connexion ── */
+function showLogin(msg){$("app").hidden=true;$("login").hidden=false;$("l-err").textContent=msg||"";lockTick();}
+async function doLogin(){var e=$("l-email").value.trim(),p=$("l-pass").value,err=$("l-err");err.textContent="";
+  if(lockLeft()){lockTick();return;}
+  if(!e||!p){err.textContent="Email et mot de passe requis.";return;}
+  var b=$("l-go");b.disabled=true;b.textContent="Connexion…";
+  try{var r=await sb.auth.signInWithPassword({email:e,password:p});
+    if(r.error){b.disabled=false;b.textContent="Se connecter";var m=r.error.message||"";
+      if(/invalid/i.test(m)){var f=lockFail();if(f.locked){err.textContent="Trop de tentatives. Réessayez dans "+f.locked+" min.";lockTick();}else err.textContent="Email ou mot de passe incorrect. Encore "+f.left+" essai"+(f.left>1?"s":"")+" avant blocage.";}
+      else if(/rate|too many/i.test(m))err.textContent="Trop de tentatives. Réessayez dans quelques minutes.";
+      else err.textContent=m;return;}
+    try{localStorage.removeItem(LK);}catch(_){}
+    b.disabled=false;b.textContent="Se connecter";$("l-pass").value="";await start();}
+  catch(x){b.disabled=false;b.textContent="Se connecter";err.textContent="Connexion impossible. Vérifiez internet.";}}
+async function start(){
+  var s=await sb.auth.getSession();if(!s.data.session){showLogin();return;}
+  var r=await sb.from("commerciaux").select("user_id,nom,email,tel,zone,taux,actif").eq("user_id",s.data.session.user.id).maybeSingle();
+  if(r.error||!r.data){await sb.auth.signOut();showLogin("Ce compte n'est pas un compte commercial VenteFlow.");return;}
+  if(!r.data.actif){await sb.auth.signOut();showLogin("Votre compte commercial est désactivé. Contactez VenteFlow.");return;}
+  ME=r.data;$("me-nom").textContent=ME.nom;$("me-sub").textContent="Commercial VenteFlow"+(ME.zone?" · "+ME.zone:"");
+  $("login").hidden=true;$("app").hidden=false;go(view);await loadAll();}
+async function loadAll(){
+  var a=await Promise.all([
+    sb.from("prospects").select("*").order("maj_le",{ascending:false}).limit(1000),
+    sb.rpc("mes_recrues"),
+    sb.from("commissions_versees").select("mois,montant,mode,verse_le").order("verse_le",{ascending:false}),
+    sb.from("parametres").select("valeur").eq("cle","tarifs").maybeSingle()]);
+  if(!a[0].error)P=a[0].data||[];if(!a[1].error)R=Array.isArray(a[1].data)?a[1].data:[];if(!a[2].error)V=a[2].data||[];
+  if(!a[3].error&&a[3].data&&a[3].data.valeur)TARIFS=a[3].data.valeur;
+  // Un prospect en essai dont la boutique a payé devient « Abonné »
+  var up=P.filter(function(p){if(p.statut!=="essai"||!p.boutique_id)return false;var b=R.find(function(x){return x.id===p.boutique_id;});return b&&(b.paiements||[]).some(payReal);});
+  up.forEach(function(p){p.statut="abonne";sb.from("prospects").update({statut:"abonne",maj_le:new Date().toISOString()}).eq("id",p.id).then(function(){});});
+  badge();render();}
+
+/* ── Navigation ── */
+function go(v){view=v;[].forEach.call(document.querySelectorAll(".nav button"),function(b){b.classList.toggle("on",b.getAttribute("data-v")===v);});$("fab").hidden=!(v==="prospects"||v==="accueil");window.scrollTo(0,0);render();}
+function render(){var f={accueil:vAccueil,prospects:vProspects,presenter:vPresenter,boutiques:vBoutiques,gains:vGains}[view];$("view").innerHTML=f?f():"";}
+function relances(){var t=today();return P.filter(function(p){return p.relance_le&&p.relance_le<=t&&p.statut!=="abonne"&&p.statut!=="perdu";});}
+function badge(){var n=relances().length,b=$("bd-rel");b.textContent=n;b.hidden=!n;}
+
+/* ── Commissions ── */
+function caMois(k){var t=0;R.forEach(function(b){(b.paiements||[]).forEach(function(p){if(payReal(p)&&monthKey(p.date)===k)t+=+p.montant;});});return t;}
+function comMois(k){return Math.round(caMois(k)*(+ME.taux||0)/100);}
+function verseMois(k){return V.filter(function(v){return v.mois===k;}).reduce(function(a,v){return a+(+v.montant||0);},0);}
+function moisListe(){var s={};s[monthKey(today())]=1;R.forEach(function(b){(b.paiements||[]).forEach(function(p){if(payReal(p))s[monthKey(p.date)]=1;});});V.forEach(function(v){s[v.mois]=1;});return Object.keys(s).sort().reverse();}
+
+/* ── Vues ── */
+function pCard(p){var m=MET[p.metier]||null,rel=p.relance_le&&p.relance_le<=today()&&p.statut!=="abonne"&&p.statut!=="perdu";
+  return '<div class="card"><div class="row"><div class="grow"><b class="ell" style="display:block;font-size:16px">'+(m?m.i+" ":"")+esc(p.nom_boutique)+'</b><div class="hint ell">'+esc([p.gerant,p.quartier].filter(Boolean).join(" · ")||"—")+'</div></div><span class="pill p-'+p.statut+'">'+ST[p.statut]+'</span></div>'+
+    (p.note?'<div class="hint" style="margin-top:6px;color:var(--ink)">📝 '+esc(p.note)+'</div>':"")+
+    (p.relance_le?'<div class="hint" style="margin-top:6px;'+(rel?"color:var(--bad);font-weight:800":"")+'">⏰ Relance : '+fdate(p.relance_le)+(rel?" — à faire":"")+'</div>':"")+
+    '<div class="acts">'+(p.tel?'<a class="btn btn-line btn-sm" href="tel:+'+waNum(p.tel)+'">📞 Appeler</a><a class="btn btn-line btn-sm" href="'+wa(p.tel,"Bonjour "+(p.gerant||"")+", c'est "+ME.nom+" de VenteFlow. ")+'" target="_blank" rel="noopener">💬 WhatsApp</a>':"")+
+    '<button class="btn btn-line btn-sm" data-act="edit" data-id="'+p.id+'">✏️ Modifier</button>'+
+    (p.statut!=="abonne"&&p.statut!=="essai"&&p.statut!=="perdu"?'<button class="btn btn-line btn-sm" data-act="pres" data-id="'+p.id+'">🎯 Présenter</button><button class="btn btn-am btn-sm" data-act="inscrire" data-id="'+p.id+'">🚀 Inscrire</button>':"")+'</div></div>';}
+function vAccueil(){var k=monthKey(today()),pm=P.filter(function(p){return monthKey(p.cree_le)===k;}).length,
+    es=R.filter(function(b){return monthKey(b.cree_le)===k;}).length,
+    ab=R.filter(function(b){return (b.paiements||[]).some(function(p){return payReal(p)&&monthKey(p.date)===k;});}).length,rel=relances();
+  var exp=R.filter(function(b){var d=daysTo(b.expire_le);return d!==null&&d>=0&&d<=3;});
+  return '<div class="sec"><h2>Bonjour '+esc(String(ME.nom).split(" ")[0])+' 👋</h2><p class="hint" style="margin:-4px 0 12px">'+monthLabel(k)+'</p>'+
+    '<div class="kpis"><div class="kpi big"><span>Ma commission ce mois</span><b>'+money(comMois(k))+'</b><span>'+(+ME.taux||0)+' % de '+money(caMois(k))+' encaissés</span></div>'+
+    '<div class="kpi"><span>Nouveaux prospects</span><b>'+pm+'</b></div><div class="kpi"><span>Boutiques inscrites</span><b>'+es+'</b></div><div class="kpi"><span>Boutiques qui ont payé</span><b>'+ab+'</b></div><div class="kpi"><span>Relances à faire</span><b style="color:'+(rel.length?"var(--bad)":"inherit")+'">'+rel.length+'</b></div></div></div>'+
+    (exp.length?'<div class="sec"><h2>Essais qui finissent</h2>'+exp.map(function(b){var d=daysTo(b.expire_le);return '<div class="alert a-warn">⏳ <b>'+esc(b.nom)+'</b> : '+(d===0?"finit aujourd'hui":"finit dans "+d+" j")+'. Appelez pour l\'abonnement.</div>';}).join("")+'</div>':"")+
+    '<div class="sec"><h2>À relancer aujourd\'hui</h2>'+(rel.length?rel.map(pCard).join(""):'<div class="card empty">Aucune relance aujourd\'hui. 👍</div>')+'</div>'+
+    '<div class="sec"><h2>Raccourcis</h2><div class="grid2"><button class="btn btn-am" data-act="new">➕ Nouveau prospect</button><button class="btn btn-a" data-act="pres">🎯 Présenter VenteFlow</button></div></div>';}
+function vProspects(){var t=today(),s=q.trim().toLowerCase();
+  var list=P.filter(function(p){if(filt==="actifs"&&(p.statut==="abonne"||p.statut==="perdu"))return false;if(filt==="relance"&&!(p.relance_le&&p.relance_le<=t&&p.statut!=="abonne"&&p.statut!=="perdu"))return false;if(ST[filt]&&p.statut!==filt)return false;
+    return !s||[p.nom_boutique,p.gerant,p.tel,p.quartier].join(" ").toLowerCase().indexOf(s)>=0;});
+  var ch=[["actifs","En cours"],["relance","À relancer"],["nouveau","Nouveaux"],["rdv","RDV"],["demo","Démo faite"],["essai","En essai"],["abonne","Abonnés"],["perdu","Perdus"],["tous","Tous"]];
+  return '<div class="sec"><h2>Mes prospects ('+P.length+')</h2><input class="in" id="q" type="search" placeholder="🔍 Chercher un nom, un quartier, un numéro" value="'+esc(q)+'" style="margin-bottom:10px">'+
+    '<div class="chips">'+ch.map(function(c){return '<button class="chip'+(filt===c[0]?" on":"")+'" data-f="'+c[0]+'">'+c[1]+'</button>';}).join("")+'</div>'+
+    (list.length?list.map(pCard).join(""):'<div class="card empty">'+(P.length?"Aucun prospect dans ce filtre.":"Ajoutez votre premier prospect avec le bouton +.")+'</div>')+'</div>';}
+function vPresenter(){return '<div class="sec"><h2>Présenter VenteFlow</h2><p class="hint" style="margin:-4px 0 12px">Choisissez le métier du commerçant : la présentation s\'adapte. Faites défiler en plein écran devant lui.</p>'+
+    '<div class="mets">'+Object.keys(MET).map(function(k){return '<button type="button" data-pres="'+k+'"><span>'+MET[k].i+'</span>'+esc(MET[k].l)+'</button>';}).join("")+'</div></div>'+
+    '<div class="sec"><h2>Montrer en vrai</h2><div class="card"><p style="margin:0 0 10px">Envoyez au commerçant la page de son métier et la vidéo de 30 secondes :</p><div class="acts" style="margin:0"><a class="btn btn-line btn-sm" href="'+SITE+'/#video" target="_blank" rel="noopener">▶️ La vidéo</a><a class="btn btn-line btn-sm" href="'+SITE+'" target="_blank" rel="noopener">🌐 Le site</a><button class="btn btn-wa btn-sm" data-act="sendsite">💬 Envoyer le site</button></div></div></div>'+
+    '<div class="sec"><h2>Les prix</h2><div class="card">'+Object.keys(TARIFS).map(function(k){return '<div class="row" style="justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line)"><b>'+esc(k)+'</b><span style="font-family:var(--display);font-weight:800;font-size:18px">'+money(TARIFS[k])+' <span class="hint" style="font-family:var(--body)">/ mois</span></span></div>';}).join("")+'<p class="hint" style="margin:10px 0 0">Toujours 7 jours d\'essai gratuit, sans engagement. Paiement par Wave ou Orange Money.</p></div></div>'+
+    '<div class="sec"><h2>Répondre aux objections</h2>'+OBJ.map(function(o){return '<details class="obj"><summary>'+esc(o[0])+'</summary><p>'+esc(o[1])+'</p></details>';}).join("")+'</div>'+
+    '<div class="sec"><h2>Comment ça marche, en 4 étapes</h2><div class="card"><ol style="margin:0;padding-left:20px;line-height:1.7"><li>Vous inscrivez la boutique ici : <b>essai gratuit 7 jours</b>.</li><li>Le gérant reçoit ses identifiants sur WhatsApp et ouvre <b>venteflow.github.io</b>.</li><li>Vous l\'aidez à ajouter ses premiers produits et à faire une vente.</li><li>Avant la fin de l\'essai, il paie son abonnement à VenteFlow : <b>vous touchez '+(+ME.taux||0)+' %</b> de chaque paiement.</li></ol></div></div>';}
+function vBoutiques(){
+  return '<div class="sec"><h2>Mes boutiques ('+R.length+')</h2><p class="hint" style="margin:-4px 0 12px">Les boutiques que vous avez inscrites. Vous ne voyez pas leurs ventes, seulement leur abonnement et leur activité.</p>'+
+    (R.length?R.map(function(b){var d=daysTo(b.expire_le),paid=(b.paiements||[]).filter(payReal),tot=paid.reduce(function(a,p){return a+(+p.montant);},0),st;
+      if(b.plan==="suspended")st='<span class="pill p-perdu">Bloquée</span>';else if(d!==null&&d<0)st='<span class="pill" style="background:var(--badbg);color:var(--bad)">Expirée</span>';else if(!paid.length)st='<span class="pill p-essai">Essai · '+(d===0?"dernier jour":d+" j")+'</span>';else st='<span class="pill p-abonne">Abonnée</span>';
+      var p=P.find(function(x){return x.boutique_id===b.id;});var tel=p&&p.tel;
+      return '<div class="card"><div class="row"><div class="grow"><b class="ell" style="display:block;font-size:16px">'+esc(b.nom)+'</b><div class="hint">Inscrite le '+fdate(b.cree_le)+' · '+(b.expire_le?"jusqu'au "+fdate(b.expire_le):"sans échéance")+'</div></div>'+st+'</div>'+
+        '<div class="hint" style="margin-top:6px">'+(b.vu_le?"📱 Application utilisée "+ago(b.vu_le):'<span style="color:var(--bad);font-weight:700">📱 Application jamais ouverte — passez l\'aider</span>')+'</div>'+
+        (paid.length?'<div class="hint" style="margin-top:4px">💳 '+paid.length+' paiement'+(paid.length>1?"s":"")+' · '+money(tot)+' · votre part : <b style="color:var(--ok)">'+money(tot*(+ME.taux||0)/100)+'</b></div>':"")+
+        (tel?'<div class="acts"><a class="btn btn-line btn-sm" href="tel:+'+waNum(tel)+'">📞 Appeler</a><a class="btn btn-line btn-sm" href="'+wa(tel,"Bonjour, c'est "+ME.nom+" de VenteFlow. Comment se passe "+b.nom+" avec VenteFlow ?")+'" target="_blank" rel="noopener">💬 WhatsApp</a></div>':"")+'</div>';}).join(""):'<div class="card empty">Pas encore de boutique inscrite. Inscrivez votre premier prospect !</div>')+'</div>';}
+function vGains(){var ms=moisListe(),tot=0,ver=0;ms.forEach(function(k){tot+=comMois(k);ver+=verseMois(k);});
+  return '<div class="sec"><h2>Mes gains</h2><div class="kpis"><div class="kpi big"><span>Reste à recevoir</span><b>'+money(Math.max(0,tot-ver))+'</b><span>Taux : '+(+ME.taux||0)+' % de chaque paiement de vos boutiques</span></div><div class="kpi"><span>Total gagné</span><b>'+money(tot)+'</b></div><div class="kpi"><span>Déjà reçu</span><b>'+money(ver)+'</b></div></div></div>'+
+    '<div class="sec"><h2>Par mois</h2><div class="card" style="overflow-x:auto"><table class="tb"><thead><tr><th>Mois</th><th class="n">Encaissé</th><th class="n">Commission</th><th class="n">Reçu</th></tr></thead><tbody>'+
+    ms.map(function(k){return '<tr><td>'+monthLabel(k)+'</td><td class="n">'+money(caMois(k))+'</td><td class="n"><b>'+money(comMois(k))+'</b></td><td class="n">'+money(verseMois(k))+'</td></tr>';}).join("")+'</tbody></table></div>'+
+    '<p class="hint">Une commission compte quand VenteFlow a enregistré le paiement de la boutique. Les mois offerts ne comptent pas.</p></div>'+
+    (V.length?'<div class="sec"><h2>Versements reçus</h2>'+V.map(function(v){return '<div class="card row"><div class="grow"><b>'+money(v.montant)+'</b><div class="hint">'+monthLabel(v.mois)+(v.mode?" · "+esc(v.mode):"")+'</div></div><span class="hint">'+fdate(v.verse_le)+'</span></div>';}).join("")+'</div>':"");}
+
+/* ── Fenêtres ── */
+function openSheet(h){$("sh").innerHTML=h;$("sheet").hidden=false;var f=$("sh").querySelector("input,select,textarea");}
+function closeSheet(){$("sheet").hidden=true;$("sh").innerHTML="";}
+$("sheet").addEventListener("click",function(e){if(e.target===this)closeSheet();});
+function metOpts(sel){return '<option value="">— Choisir —</option>'+Object.keys(MET).map(function(k){return '<option value="'+k+'"'+(k===sel?" selected":"")+'>'+MET[k].i+" "+esc(MET[k].l)+'</option>';}).join("");}
+function editProspect(id){var p=id?P.find(function(x){return x.id===+id;}):null;p=p||{statut:"nouveau"};var stt=p.statut;
+  openSheet('<div class="sh-top"><h2>'+(p.id?"Modifier le prospect":"Nouveau prospect")+'</h2><button class="x" type="button" data-act="close" aria-label="Fermer">✕</button></div>'+
+    '<label class="lbl" for="e-nom">Nom de la boutique</label><input class="in" id="e-nom" maxlength="80" value="'+esc(p.nom_boutique||"")+'">'+
+    '<div class="grid2"><div><label class="lbl" for="e-ger">Gérant</label><input class="in" id="e-ger" maxlength="80" value="'+esc(p.gerant||"")+'"></div><div><label class="lbl" for="e-tel">Téléphone</label><input class="in" id="e-tel" type="tel" inputmode="tel" maxlength="20" value="'+esc(p.tel||"")+'"></div></div>'+
+    '<div class="grid2"><div><label class="lbl" for="e-met">Métier</label><select class="in" id="e-met">'+metOpts(p.metier)+'</select></div><div><label class="lbl" for="e-qua">Quartier / ville</label><input class="in" id="e-qua" maxlength="80" value="'+esc(p.quartier||"")+'"></div></div>'+
+    '<span class="lbl">Où en est-il ?</span><div class="sts" id="e-st">'+["nouveau","rdv","demo","essai","abonne","perdu"].map(function(s){return '<button type="button" data-st="'+s+'" class="'+(s===stt?"on":"")+'"'+((s==="essai"||s==="abonne")&&!p.boutique_id?" disabled title=\"Passe en essai à l'inscription\"":"")+'>'+ST[s]+'</button>';}).join("")+'</div>'+
+    '<label class="lbl" for="e-rel">Date de relance</label><div class="row"><input class="in" id="e-rel" type="date" value="'+esc(p.relance_le||"")+'" style="flex:1"><button class="btn btn-line btn-sm" type="button" data-rel="1">Demain</button><button class="btn btn-line btn-sm" type="button" data-rel="7">+7 j</button></div>'+
+    '<label class="lbl" for="e-note">Note</label><textarea class="in" id="e-note" maxlength="1000" placeholder="Ce qu\'il vend, ce qui l\'intéresse, ses objections…">'+esc(p.note||"")+'</textarea>'+
+    '<div class="err" id="e-err" role="alert"></div><button class="btn btn-a w100" type="button" id="e-save" style="min-height:52px;margin-top:6px">💾 Enregistrer</button>'+
+    (p.id&&!p.boutique_id?'<button class="btn btn-line w100" type="button" id="e-del" style="margin-top:8px;color:var(--bad)">Supprimer ce prospect</button>':""));
+  $("e-st").addEventListener("click",function(e){var b=e.target.closest("button[data-st]");if(!b||b.disabled)return;stt=b.getAttribute("data-st");[].forEach.call(this.children,function(x){x.classList.toggle("on",x===b);});});
+  [].forEach.call(document.querySelectorAll("[data-rel]"),function(b){b.onclick=function(){$("e-rel").value=addDays(+this.getAttribute("data-rel"));};});
+  $("e-save").onclick=async function(){var nom=$("e-nom").value.trim();if(nom.length<2){$("e-err").textContent="Indiquez le nom de la boutique.";return;}
+    var row={nom_boutique:nom,gerant:$("e-ger").value.trim()||null,tel:$("e-tel").value.trim()||null,metier:$("e-met").value||null,quartier:$("e-qua").value.trim()||null,statut:stt,relance_le:$("e-rel").value||null,note:$("e-note").value.trim()||null,maj_le:new Date().toISOString()};
+    this.disabled=true;this.textContent="Enregistrement…";
+    var r=p.id?await sb.from("prospects").update(row).eq("id",p.id).select().single():await sb.from("prospects").insert(row).select().single();
+    if(r.error){this.disabled=false;this.textContent="💾 Enregistrer";$("e-err").textContent=r.error.message;return;}
+    if(p.id){var i=P.findIndex(function(x){return x.id===p.id;});P[i]=r.data;}else P.unshift(r.data);closeSheet();badge();render();toast(p.id?"✅ Prospect mis à jour":"✅ Prospect ajouté");};
+  if($("e-del"))$("e-del").onclick=async function(){if(!confirm("Supprimer "+p.nom_boutique+" ?"))return;var r=await sb.from("prospects").delete().eq("id",p.id);if(r.error){$("e-err").textContent=r.error.message;return;}P=P.filter(function(x){return x.id!==p.id;});closeSheet();badge();render();toast("Prospect supprimé");};}
+
+function inscrire(id){var p=P.find(function(x){return x.id===+id;});if(!p)return;var pw=genPwd(),useTel=true;
+  function body(){return '<div class="sh-top"><h2>Inscrire la boutique</h2><button class="x" type="button" data-act="close" aria-label="Fermer">✕</button></div>'+
+    '<div class="alert a-ok">🎁 Essai gratuit de <b>7 jours</b>, sans engagement. Le gérant reçoit ses identifiants sur WhatsApp.</div>'+
+    '<label class="lbl" for="i-nom">Nom de la boutique</label><input class="in" id="i-nom" maxlength="80" value="'+esc(p.nom_boutique)+'">'+
+    '<label class="lbl" for="i-met">Métier</label><select class="in" id="i-met">'+metOpts(p.metier)+'</select>'+
+    '<label class="lbl" for="i-tel">WhatsApp du gérant</label><input class="in" id="i-tel" type="tel" inputmode="tel" maxlength="20" value="'+esc(p.tel||"")+'">'+
+    '<span class="lbl">Identifiant de connexion</span><div class="sts" style="grid-template-columns:1fr 1fr" id="i-mode"><button type="button" data-m="tel" class="on">Son numéro</button><button type="button" data-m="mail">Son email</button></div>'+
+    '<div id="i-mail-w" hidden><label class="lbl" for="i-mail">Email du gérant</label><input class="in" id="i-mail" type="email" inputmode="email" maxlength="120"></div>'+
+    '<label class="lbl" for="i-pw">Mot de passe (il pourra le changer)</label><div class="row"><input class="in" id="i-pw" value="'+pw+'" style="flex:1;font-family:ui-monospace,monospace"><button class="btn btn-line btn-sm" type="button" id="i-gen" aria-label="Générer un autre">🎲</button></div>'+
+    '<div class="err" id="i-err" role="alert"></div><button class="btn btn-am w100" type="button" id="i-go" style="min-height:54px;margin-top:6px">🚀 Créer la boutique</button>';}
+  openSheet(body());
+  $("i-mode").addEventListener("click",function(e){var b=e.target.closest("button[data-m]");if(!b)return;useTel=b.getAttribute("data-m")==="tel";[].forEach.call(this.children,function(x){x.classList.toggle("on",x===b);});$("i-mail-w").hidden=useTel;});
+  $("i-gen").onclick=function(){$("i-pw").value=genPwd();};
+  $("i-go").onclick=async function(){var err=$("i-err"),nom=$("i-nom").value.trim(),met=$("i-met").value,tel=waNum($("i-tel").value),pwd=$("i-pw").value.trim(),email;
+    err.textContent="";
+    if(nom.length<2){err.textContent="Nom de la boutique requis.";return;}if(!met){err.textContent="Choisissez le métier.";return;}
+    if(tel.length<11){err.textContent="Numéro WhatsApp du gérant invalide.";return;}
+    if(pwd.length<8||!/\d/.test(pwd)){err.textContent="Mot de passe : 8 caractères avec un chiffre.";return;}
+    email=useTel?tel+"@client.venteflow.app":$("i-mail").value.trim().toLowerCase();
+    if(!useTel&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){err.textContent="Email du gérant invalide.";return;}
+    var b=this;b.disabled=true;b.textContent="Création en cours…";
+    try{var s=await sb.auth.getSession();var tok=s.data.session&&s.data.session.access_token;
+      var r=await fetch(SB_URL+"/functions/v1/espace-commercial",{method:"POST",headers:{"Content-Type":"application/json","apikey":SB_KEY,"Authorization":"Bearer "+tok},body:JSON.stringify({action:"inscrire_boutique",prospect_id:p.id,nom:nom,metier:met,email:email,password:pwd})});
+      var d=null;try{d=await r.json();}catch(_){}
+      if(!r.ok||!d||!d.ok)throw new Error((d&&d.error)||"Erreur "+r.status);
+      p.statut="essai";p.boutique_id=d.boutique_id;if(!p.tel)p.tel=tel;
+      var login=useTel?tel:email;
+      var msg="Bienvenue sur VenteFlow ! 🎉\n\nVotre boutique « "+nom+" » est prête. Essai gratuit jusqu'au "+fdate(d.expire_le)+".\n\n1. Ouvrez : "+APP_URL+"\n2. Email : "+(useTel?email:login)+"\n3. Mot de passe : "+pwd+"\n\nVous choisirez ensuite votre code d'accès à 4 chiffres. Votre conseiller : "+ME.nom+(ME.tel?" ("+ME.tel+")":"")+".\nAide 7j/7 sur WhatsApp : +"+SUPPORT;
+      $("sh").innerHTML='<div class="sh-top"><h2>Boutique créée 🎉</h2><button class="x" type="button" data-act="close" aria-label="Fermer">✕</button></div>'+
+        '<div class="alert a-ok">Essai gratuit jusqu\'au <b>'+fdate(d.expire_le)+'</b>.</div>'+
+        '<div class="cred">Adresse : <b>'+APP_URL+'</b><br>Email : <b>'+esc(email)+'</b><br>Mot de passe : <b style="font-family:ui-monospace,monospace">'+esc(pwd)+'</b></div>'+
+        '<a class="btn btn-wa w100" style="margin-top:12px;min-height:54px" href="'+wa(tel,msg)+'" target="_blank" rel="noopener">💬 Envoyer les identifiants au gérant</a>'+
+        '<p class="hint" style="margin:12px 0 0">Prochaine étape : aidez-le à se connecter, à ajouter 5 produits et à faire sa première vente. Un gérant qui vend le premier jour s\'abonne.</p>';
+      render();toast("✅ Boutique créée");sb.rpc("mes_recrues").then(function(x){if(!x.error){R=x.data||[];render();}});}
+    catch(x){b.disabled=false;b.textContent="🚀 Créer la boutique";err.textContent=x.message||"Création impossible.";}};}
+
+/* ── Présentation plein écran ── */
+var PR={i:0,s:[],pid:null};
+function slides(k){var m=MET[k]||MET.general,t=Object.keys(TARIFS);
+  return [
+   {i:"📒",h:"Encore le cahier ?",p:"Ce que vivent beaucoup de commerçants :",l:[["Des crédits oubliés","Le client ne revient pas, l'argent est perdu."],["Un stock qui ne colle pas","On ne sait jamais ce qui manque ni ce qui a disparu."],["Le bénéfice ? Personne ne sait","On compte l'argent du tiroir, pas ce qu'on gagne vraiment."]]},
+   {i:m.i,h:"VenteFlow pour "+(k==="general"?"votre commerce":m.l.toLowerCase()),p:"Une caisse et une gestion pensées pour votre métier :",l:m.f},
+   {i:"🛒",h:"Une caisse simple",p:"Sur votre téléphone, votre tablette ou votre PC.",l:[["3 touchers pour vendre","Choisissez les produits, encaissez, la monnaie est calculée."],["Wave, Orange Money, espèces","Et la vente à crédit avec acompte et date limite."],["Factures et tickets pro","Votre logo, NINEA et RC, envoyés sur WhatsApp ou imprimés."]]},
+   {i:"📊",h:"Vos chiffres chaque soir",p:"Sans calculatrice.",l:[["Chiffre d'affaires et bénéfice","Le vrai bénéfice, avec le prix d'achat."],["Meilleurs produits","Ce qui se vend, ce qui dort, ce qui va manquer."],["Clôture de caisse","L'argent attendu et l'écart, vendeur par vendeur."]]},
+   {i:"🔒",h:"Vos vendeurs sous contrôle",p:"Vous savez qui a vendu quoi, et quand.",l:[["Un code par vendeur","Chaque vente porte l'heure et le nom du vendeur."],["Seul le gérant supprime","Aucune vente ne disparaît en cachette."],["Vente à perte bloquée","Un vendeur ne peut pas brader sous le prix d'achat."]]},
+   {i:"📶",h:"Même sans internet",p:"Coupure de réseau ou de courant ? Vous continuez à vendre.",l:[["Tout reste sur le téléphone","Et part dans le cloud au retour du réseau."],["Rien ne se perd","Téléphone cassé : vous retrouvez tout sur un autre."],["Plusieurs caisses","Deux vendeurs, deux téléphones, un seul stock."]]},
+   {i:"🌐",h:"Votre boutique en ligne",p:"Inclus : vos clients commandent depuis leur téléphone.",l:[["Un lien et un QR code","À partager sur WhatsApp et sur vos statuts."],["La commande arrive chez vous","Dans VenteFlow et sur votre WhatsApp."],["Vos prix d'achat restent cachés","Le client ne voit que vos prix de vente."]]},
+   {i:"💳",h:"Combien ça coûte ?",p:"7 jours gratuits, puis un abonnement mensuel :",price:t.map(function(x){return [x,TARIFS[x]];})},
+   {i:"🚀",h:"On commence aujourd'hui ?",p:"Je crée votre boutique maintenant. Essai gratuit 7 jours, sans engagement. Je vous aide à mettre vos premiers produits.",cta:1}];}
+function openPres(k,pid){PR={i:0,s:slides(k||"general"),pid:pid||null,k:k};$("pres").hidden=false;drawPres();try{document.documentElement.requestFullscreen&&window.innerWidth<900&&document.documentElement.requestFullscreen().catch(function(){});}catch(e){}}
+function closePres(){$("pres").hidden=true;try{if(document.fullscreenElement)document.exitFullscreen();}catch(e){}}
+function drawPres(){var s=PR.s[PR.i],n=PR.s.length,best=Object.keys(TARIFS).indexOf("Business");
+  $("pres").innerHTML='<div class="pres-top"><div class="dots">'+PR.s.map(function(_,i){return '<i class="'+(i<=PR.i?"on":"")+'"></i>';}).join("")+'</div><button type="button" data-p="close" aria-label="Fermer">✕</button></div>'+
+    '<div class="slide"><div class="ico">'+s.i+'</div><h2>'+esc(s.h)+'</h2>'+(s.p?'<p class="lead">'+esc(s.p)+'</p>':"")+
+    (s.l?'<ul>'+s.l.map(function(x){return '<li><b>'+esc(x[0])+'</b>'+esc(x[1])+'</li>';}).join("")+'</ul>':"")+
+    (s.price?'<div class="price">'+s.price.map(function(x,i){return '<div class="'+(i===best?"best":"")+'"><span><b style="font-size:18px;font-family:var(--body)">'+esc(x[0])+'</b>'+(i===best?'<br><span class="hint">le plus choisi</span>':"")+'</span><b>'+money(x[1])+'<span class="hint" style="font-family:var(--body);font-size:13px"> / mois</span></b></div>';}).join("")+'</div><p class="lead" style="margin-top:14px">Moins de '+money(Math.ceil((TARIFS.Business||10000)/30/50)*50)+' par jour pour la formule Business.</p>':"")+
+    (s.cta?'<button class="btn btn-am w100" type="button" data-p="go" style="min-height:58px;font-size:17px;margin-top:6px">'+(PR.pid?"🚀 Inscrire la boutique":"➕ Noter ce commerçant")+'</button>':"")+'</div>'+
+    '<div class="pres-bot"><button class="btn prev" type="button" data-p="prev"'+(PR.i?"":" disabled")+'>← Retour</button><button class="btn btn-am" type="button" data-p="next">'+(PR.i<n-1?"Suivant →":"Terminer")+'</button></div>';}
+$("pres").addEventListener("click",function(e){var b=e.target.closest("[data-p]");if(!b)return;var a=b.getAttribute("data-p");
+  if(a==="close")closePres();else if(a==="prev"&&PR.i>0){PR.i--;drawPres();}else if(a==="next"){if(PR.i<PR.s.length-1){PR.i++;drawPres();}else closePres();}
+  else if(a==="go"){closePres();if(PR.pid)inscrire(PR.pid);else{editProspect(null);setTimeout(function(){var m=$("e-met");if(m&&PR.k)m.value=PR.k;},0);}}});
+(function(){var x0=null;$("pres").addEventListener("touchstart",function(e){x0=e.touches[0].clientX;},{passive:true});
+  $("pres").addEventListener("touchend",function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(dx)<60)return;if(dx<0&&PR.i<PR.s.length-1){PR.i++;drawPres();}else if(dx>0&&PR.i>0){PR.i--;drawPres();}},{passive:true});})();
+document.addEventListener("keydown",function(e){if(!$("pres").hidden){if(e.key==="ArrowRight"&&PR.i<PR.s.length-1){PR.i++;drawPres();}else if(e.key==="ArrowLeft"&&PR.i>0){PR.i--;drawPres();}else if(e.key==="Escape")closePres();}else if(e.key==="Escape"&&!$("sheet").hidden)closeSheet();});
+
+/* ── Événements ── */
+document.addEventListener("click",function(e){var n=e.target.closest(".nav button");if(n){go(n.getAttribute("data-v"));return;}
+  var f=e.target.closest("[data-f]");if(f){filt=f.getAttribute("data-f");render();return;}
+  var pm=e.target.closest("[data-pres]");if(pm){openPres(pm.getAttribute("data-pres"),null);return;}
+  var a=e.target.closest("[data-act]");if(!a)return;var act=a.getAttribute("data-act"),id=a.getAttribute("data-id");
+  if(act==="close")closeSheet();else if(act==="new")editProspect(null);else if(act==="edit")editProspect(id);else if(act==="inscrire")inscrire(id);
+  else if(act==="pres"){if(id){var p=P.find(function(x){return x.id===+id;});openPres((p&&p.metier)||"general",id);}else go("presenter");}
+  else if(act==="sendsite")window.open(wa("","Découvrez VenteFlow, la caisse et la gestion de votre boutique sur téléphone : "+SITE),"_blank");});
+document.addEventListener("input",function(e){if(e.target.id==="q"){q=e.target.value;var pos=e.target.selectionStart;render();var i=$("q");if(i){i.focus();try{i.setSelectionRange(pos,pos);}catch(_){}}}});
+$("fab").onclick=function(){editProspect(null);};
+$("l-go").onclick=doLogin;$("l-pass").addEventListener("keydown",function(e){if(e.key==="Enter")doLogin();});
+$("b-out").onclick=async function(){if(!confirm("Se déconnecter ?"))return;await sb.auth.signOut();ME=null;P=[];R=[];V=[];showLogin();};
+document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible"&&ME)loadAll();});
+
+/* ── Démarrage ── */
+if(!window.supabase){showLogin("Connexion impossible. Vérifiez internet puis rechargez la page.");return;}
+sb=window.supabase.createClient(SB_URL,SB_KEY,{auth:{storageKey:"vfc-auth",persistSession:true,autoRefreshToken:true}});
+start().catch(function(){showLogin("Connexion impossible. Vérifiez internet puis rechargez la page.");});
+if("serviceWorker" in navigator){/* l'application s'installe via le manifeste ; pas de cache hors ligne pour garder les données à jour */}
+})();
+</script>
+</body>
+</html>
